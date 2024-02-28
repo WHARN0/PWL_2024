@@ -1,10 +1,21 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleCOntroller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/hello', function () {
-    return 'Hello World';
-});
+use App\Http\Controllers\PhotoController;
+
+Route::resource('photos', PhotoController::class)->only(['index', 'show']);
+
+Route::get('/hello', [WelcomeController::class, 'hello']);
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
+
 
 Route::get('/world', function () {
     return 'World';
@@ -42,3 +53,14 @@ Route::get('/articles/{id}', function ($articlesId) {
 Route::get('/user/profile', function () {
     //
 })->name('profile');
+
+// Route::get('/greeting', function () {
+//     return view('hello', ['name' => 'Arno']);
+// });
+
+// Route::get('/greeting', function () {
+//     return view('blog.hello', ['name' => 'Arno']);
+// });
+
+Route::get('/greeting', [WelcomeController::class,
+'greeting']);
